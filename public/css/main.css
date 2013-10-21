@@ -1,0 +1,35 @@
+
+* {
+	font-family: Helvetica;
+}
+body { 
+	margin:0; 
+	padding:0; 
+/*	background: url('../img/bg_mountain_view.jpg');
+	background-size: cover;*/
+}
+
+#container {
+	height: 500px;
+}
+
+#forClone {
+	display: none;
+}
+
+.elemCity {
+	position: absolute;
+	bottom: 0;
+}
+
+.elemCountry {
+	position: absolute;
+}
+
+.elemHits {
+	position: absolute;
+}
+
+.elemBytes {
+	position: absolute;
+}
