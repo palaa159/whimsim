@@ -28,6 +28,8 @@ socket.on('data', function(data) {
 			// modify hit and bytes
 			cityData[index].hit++;
 			cityData[index].bytes += v.bytesSent - cityData[index].bytes;
+			// update and flash
+			$('#' + v.city.replace(/\s/g, '')).children('.elemHits').html(cityData[index].hit + ' hits with ' + cityData[index].bytes + ' bytes');
 		}
 	});
 });
@@ -35,7 +37,7 @@ socket.on('data', function(data) {
 function getFlickr(id, lat, lng) { // get popular img URL
 	var url;
 	$.ajax({
-		url: 'http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=d87236b5124ce382b0f2dc4c001aa228&lat=' + lat + '&lon=' + lng + '&tags=landscape&per_page=10&format=json&jsoncallback=?',
+		url: 'http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=d87236b5124ce382b0f2dc4c001aa228&lat=' + lat + '&lon=' + lng + '&radius=30&radius_unit=km&per_page=10&format=json&jsoncallback=?',
 		dataType: 'jsonp',
 		success: function(data) {
 			console.log(data.photos.photo);
@@ -49,10 +51,8 @@ function getFlickr(id, lat, lng) { // get popular img URL
 			// clone
 			var newElem = $('#forClone').clone().attr('id', cityId.replace(/\s/g, '')).addClass('item').addClass('isotope-item').show();
 			newElem.children('img').attr('src', url);
-			newElem.children('.elemCity').html(cityData[id].city);
-			newElem.children('.elemCountry').html(cityData[id].country);
-			newElem.children('.elemHits').html(cityData[id].hit);
-			newElem.children('.elemBytes').html(cityData[id].bytes);
+			newElem.children('.elemCity').html(cityData[id].city + ', ' + cityData[id].country);
+			newElem.children('.elemHits').html(cityData[id].hit + ' hits with ' + cityData[id].bytes + ' bytes');
 			$('#container').append(newElem);
 		}
 	});
